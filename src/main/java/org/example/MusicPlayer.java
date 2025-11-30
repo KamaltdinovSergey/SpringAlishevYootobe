@@ -1,13 +1,49 @@
 package org.example;
 
-public class MusicPlayer {
-    private Music music;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-    //IoC - через полиморфизм в конструктор передается объект
-    public MusicPlayer(Music music){
-        this.music = music;
+import java.util.ArrayList;
+import java.util.List;
+@Component
+public class MusicPlayer {
+//    private ClassicalMusic classicalMusic;
+
+    @Value("${musicPlayer.name}")
+    private String name;
+
+    @Value("${musicPlayer.volume}")
+    private int volume;
+
+    public String getName() {
+        return name;
     }
-    public void playMusic(){
-        System.out.println("Playing: " + music.getSong());
+
+    public int getVolume() {
+        return volume;
+    }
+
+    private Music music1;
+    private Music music2;
+
+
+    @Autowired
+    public MusicPlayer(@Qualifier("rockMusic") Music music1,
+                       @Qualifier("classicalMusic") Music music2){
+        this.music1 = music1;
+        this.music2 = music2;
+    }
+//    //IoC - через конструктор передается объект (создание зависимости)
+//    @Autowired
+//    public MusicPlayer(ClassicalMusic classicalMusic){
+//        this.classicalMusic = classicalMusic;
+//    }
+    //пустой конструктор
+//    public  MusicPlayer(){}
+
+    public String playMusic(){
+        return "Playing: " + music1.getSong() + " " + music2.getSong();
     }
 }

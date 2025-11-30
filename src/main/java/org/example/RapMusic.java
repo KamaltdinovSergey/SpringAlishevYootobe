@@ -3,9 +3,10 @@ package org.example;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RockMusic implements Music {
+public class RapMusic implements Music {
     @Override
     public String getSong() {
-        return "Wind cris Mary";
+        return "Big City Life";
     }
+
 }
